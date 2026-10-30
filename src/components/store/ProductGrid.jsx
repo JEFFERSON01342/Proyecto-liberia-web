@@ -129,7 +129,7 @@ export default function ProductGrid({ search }) {
         {filtered.map((p) => {
           const outOfStock = p.stock <= 0;
           const lowStock = p.stock > 0 && p.stock <= 5;
-          const promo = getDescuentoParaProducto ? getDescuentoParaProducto(p.id, p.category, p.price) : null;
+          const promo = getDescuentoParaProducto ? getDescuentoParaProducto(p.id, p.category_id, p.price) : null;
           return (
             <div key={p.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-md hover:-translate-y-1">
               {/* Imagen clicable */}

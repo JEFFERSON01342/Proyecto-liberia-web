@@ -10,7 +10,7 @@ function PromoBanner() {
 
   const etiqueta = (d) => {
     if (d.tipo === 'porcentaje') return `${Number(d.valor)}% OFF`;
-    if (d.tipo === 'monto_fijo') return `C$${Number(d.valor)} OFF`;
+    if (d.tipo === 'monto') return `C$${Number(d.valor)} OFF`;
     return '';
   };
 

@@ -268,21 +268,48 @@ export function AppProvider({ children }) {
 
   // ===== Load descuentos (promociones activas) =====
   const loadDescuentos = useCallback(async () => {
-    setDescuentos([]);
-    setDescuentoProductos([]);
-    setDescuentoCategorias([]);
-  }, []);
+    if (!isSupabaseConfigured()) return;
+    const { data, error } = await supabase.rpc('listar_promociones_web', {
+      p_id_empresa: EMPRESA_ID,
+    });
+    if (error) {
+      console.error('loadDescuentos error:', error);
+      setDescuentos([]);
+      setDescuentoProductos([]);
+      setDescuentoCategorias([]);
+      showToast('No se pudieron cargar las promociones vigentes.', 'error');
+      return;
+    }
+
+    const promociones = Array.isArray(data) ? data : [];
+    setDescuentos(promociones);
+    setDescuentoProductos(promociones.flatMap((d) =>
+      (d.productos || []).map((idProducto) => ({
+        id_descuento: Number(d.id),
+        id_producto: Number(idProducto),
+      }))
+    ));
+    setDescuentoCategorias(promociones.flatMap((d) =>
+      (d.categorias || []).map((categoria) => ({
+        id_descuento: Number(d.id),
+        id_categoria: Number(categoria.id_categoria),
+        categoria_nombre: categoria.categoria_nombre || '',
+      }))
+    ));
+  }, [isSupabaseConfigured, showToast]);
 
   // Determina si un descuento aplica a un producto dado.
-  const descuentoAplica = useCallback((d, productId, categoryName) => {
+  const descuentoAplica = useCallback((d, productId, categoryId) => {
     const aplica = d.aplica_a || 'todos';
     if (aplica === 'todos') return true;
-    if (aplica === 'producto') {
-      return descuentoProductos.some((r) => r.id_descuento === d.id && r.id_producto === productId);
+    if (aplica === 'productos') {
+      return descuentoProductos.some((r) =>
+        r.id_descuento === Number(d.id) && r.id_producto === Number(productId)
+      );
     }
-    if (aplica === 'categoria') {
-      return descuentoCategorias.some(
-        (r) => r.id_descuento === d.id && (r.categoria_nombre || '').toLowerCase() === (categoryName || '').toLowerCase()
+    if (aplica === 'categorias') {
+      return descuentoCategorias.some((r) =>
+        r.id_descuento === Number(d.id) && r.id_categoria === Number(categoryId)
       );
     }
     return false;
@@ -290,12 +317,12 @@ export function AppProvider({ children }) {
 
   // Devuelve el mejor descuento para un producto, o null.
   // { descuento, precioFinal, ahorro, label } — requiere el precio original.
-  const getDescuentoParaProducto = useCallback((productId, categoryName, precioOriginal) => {
+  const getDescuentoParaProducto = useCallback((productId, categoryId, precioOriginal) => {
     if (!descuentos || descuentos.length === 0) return null;
 
     const precio = Number(precioOriginal);
     // Si no se pasa precio (uso solo para label), buscamos igual el descuento aplicable.
-    const aplicables = descuentos.filter((d) => descuentoAplica(d, productId, categoryName));
+    const aplicables = descuentos.filter((d) => descuentoAplica(d, productId, categoryId));
     if (aplicables.length === 0) return null;
 
     // Elegimos el que genera mayor ahorro sobre este precio.
@@ -304,10 +331,14 @@ export function AppProvider({ children }) {
       let ahorro = 0;
       if (d.tipo === 'porcentaje') {
         ahorro = (precio || 0) * (Number(d.valor) / 100);
-      } else { // monto_fijo
+      } else {
         ahorro = Number(d.valor);
       }
-      if (precio) ahorro = Math.min(ahorro, precio); // nunca negativo
+      ahorro = Math.round(ahorro * 100) / 100;
+      if (precio) {
+        const maximoAhorro = Math.max(Math.round(precio * 100) - 1, 0) / 100;
+        ahorro = Math.min(ahorro, maximoAhorro);
+      }
       if (!mejor || ahorro > mejor.ahorro) {
         const label = d.tipo === 'porcentaje'
           ? `${Number(d.valor)}% OFF`
@@ -317,7 +348,9 @@ export function AppProvider({ children }) {
     }
     if (!mejor) return null;
 
-    const precioFinal = precio ? Math.max(precio - mejor.ahorro, 0) : null;
+    const precioFinal = precio
+      ? Math.round((precio - mejor.ahorro) * 100) / 100
+      : null;
     return { descuento: mejor.descuento, precioFinal, ahorro: mejor.ahorro, label: mejor.label };
   }, [descuentos, descuentoAplica]);
 
@@ -613,10 +646,12 @@ export function AppProvider({ children }) {
       }
       const numeroOrden = rpcData.numero_orden;
       const total = Number(rpcData.total);
-      const itemsFactura = cart.map((item) => ({
-        name: item.name,
-        quantity: item.quantity,
-        price: item.price,
+      const itemsFactura = (Array.isArray(rpcData.items) ? rpcData.items : cart).map((item) => ({
+        name: item.name || item.nombre,
+        quantity: Number(item.quantity ?? item.cantidad),
+        price: Number(item.precio_unitario ?? item.price),
+        precioLista: Number(item.precio_lista_unitario ?? item.price),
+        descuento: Number(item.descuento_linea || 0),
       }));
       if (currentProfile?.id && loadMyOrdersRef.current) await loadMyOrdersRef.current();
 

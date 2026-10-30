@@ -7,7 +7,7 @@ export default function CartModal() {
   const { cartModalOpen, setCartModalOpen, cart, changeQty, removeFromCart, checkoutOrder, currentProfile, guestInfo, showToast, getDescuentoParaProducto, sucursales, sucursalId, setSucursal, sucursalActual } = useApp();
 
   // Precio efectivo de un item aplicando el descuento vigente (si existe).
-  const infoDescuento = (item) => getDescuentoParaProducto?.(item.id, item.category, item.price) || null;
+  const infoDescuento = (item) => getDescuentoParaProducto?.(item.id, item.category_id, item.price) || null;
   const precioEfectivo = (item) => {
     const info = infoDescuento(item);
     return info && info.precioFinal != null ? info.precioFinal : item.price;
@@ -31,7 +31,13 @@ export default function CartModal() {
 
   if (!cartModalOpen) return null;
 
-  const total = cart.reduce((sum, item) => sum + precioEfectivo(item) * item.quantity, 0);
+  const total = cart.reduce((sum, item) => (
+    sum + Math.round(precioEfectivo(item) * item.quantity * 100) / 100
+  ), 0);
+  const ahorroTotal = cart.reduce((sum, item) => (
+    sum + Math.round(item.price * item.quantity * 100) / 100
+      - Math.round(precioEfectivo(item) * item.quantity * 100) / 100
+  ), 0);
 
   const finalizarPedido = async () => {
     const ok = await checkoutOrder({
@@ -142,10 +148,19 @@ export default function CartModal() {
         </div>
 
         <div className="p-6 bg-slate-50 border-t border-slate-200 space-y-4">
+          {ahorroTotal > 0 && (
+            <div className="flex items-center justify-between text-sm font-semibold text-rose-600">
+              <span>Ahorro por promociones:</span>
+              <span>-C${ahorroTotal.toFixed(2)}</span>
+            </div>
+          )}
           <div className="flex items-center justify-between text-lg font-bold">
             <span>Total a Pagar:</span>
             <span className="text-indigo-600">C${total.toFixed(2)}</span>
           </div>
+          <p className="text-xs text-slate-500">
+            La promoción y el total final se verifican al confirmar el pedido.
+          </p>
 
           <div className="space-y-3 pt-2 border-t border-slate-200">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
