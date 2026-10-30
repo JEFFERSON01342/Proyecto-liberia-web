@@ -98,14 +98,14 @@ export default function OrderConfirmationModal() {
             <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">
               Tu número de orden
             </p>
-            <div className="bg-indigo-50 border-2 border-dashed border-indigo-300 rounded-2xl py-5 px-4">
-              <p className="text-4xl font-extrabold text-indigo-700 tracking-widest">
+            <div className="rounded-2xl border-2 border-dashed border-[#c99b94] bg-[#fdf3f3] px-4 py-5">
+              <p className="text-4xl font-extrabold tracking-widest text-[#6f1719]">
                 {numeroOrden || '—'}
               </p>
             </div>
             <button
               onClick={copyNumber}
-              className="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
+              className="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-[#9e2a2b] transition-colors hover:text-[#6f1719]"
             >
               <i className={copied ? 'fa-solid fa-check' : 'fa-regular fa-copy'} />
               {copied ? '¡Copiado!' : 'Copiar número'}
@@ -126,9 +126,9 @@ export default function OrderConfirmationModal() {
           </div>
 
           {!esImpresion && sucursal && esRetiro && (
-            <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-4 flex gap-3">
-              <i className="fa-solid fa-store text-indigo-500 text-lg mt-0.5" />
-              <div className="text-sm text-indigo-800">
+            <div className="flex gap-3 rounded-2xl border border-[#f7cdcd] bg-[#fdf3f3] p-4">
+              <i className="fa-solid fa-store mt-0.5 text-lg text-[#9e2a2b]" />
+              <div className="text-sm text-[#6f1719]">
                 <p className="font-bold mb-0.5">Retiro en sucursal {sucursal}</p>
                 <p className="text-xs leading-relaxed">Pasá por tu pedido a esta sucursal cuando te confirmemos que está listo.</p>
               </div>
@@ -136,7 +136,7 @@ export default function OrderConfirmationModal() {
           )}
 
           {!esImpresion && tipo_entrega === 'DOMICILIO' && direccion_entrega && (
-            <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-4 text-sm text-indigo-800">
+            <div className="rounded-2xl border border-[#f7cdcd] bg-[#fdf3f3] p-4 text-sm text-[#6f1719]">
               <p className="font-bold">Dirección de entrega</p>
               <p className="text-xs">{direccion_entrega}</p>
             </div>
@@ -152,7 +152,7 @@ export default function OrderConfirmationModal() {
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
               <p className="font-bold">Clave privada del pedido de invitado</p>
               <p className="mt-1 break-all font-mono text-xs">{tokenAcceso}</p>
-              <button onClick={copyAccessToken} className="mt-2 text-xs font-semibold text-indigo-600 hover:underline">
+              <button onClick={copyAccessToken} className="mt-2 text-xs font-semibold text-[#9e2a2b] hover:underline">
                 {copiedAccessToken ? 'Clave copiada' : 'Copiar clave de seguimiento'}
               </button>
               <p className="mt-1 text-xs text-slate-500">Guárdala junto al número de orden. Permite consultar este pedido y no debes compartirla públicamente.</p>
@@ -183,7 +183,7 @@ export default function OrderConfirmationModal() {
           {!esImpresion && (
             <button
               onClick={descargarFactura}
-              className="w-full rounded-xl border-2 border-indigo-600 py-3 text-sm font-bold text-indigo-700 transition hover:bg-indigo-50 active:scale-[0.98] flex items-center justify-center gap-2"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[#9e2a2b] py-3 text-sm font-bold text-[#9e2a2b] transition hover:bg-[#fdf3f3] active:scale-[0.98]"
             >
               <i className="fa-solid fa-file-pdf" />
               Descargar Factura PDF
@@ -192,7 +192,7 @@ export default function OrderConfirmationModal() {
 
           <button
             onClick={closeOrderConfirmation}
-            className="w-full rounded-xl bg-indigo-600 py-3.5 text-sm font-bold text-white shadow-lg transition hover:bg-indigo-700 active:scale-[0.98]"
+            className="w-full rounded-xl bg-[#9e2a2b] py-3.5 text-sm font-bold text-white shadow-lg transition hover:bg-[#871f21] active:scale-[0.98]"
           >
             Entendido
           </button>

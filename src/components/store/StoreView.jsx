@@ -18,24 +18,24 @@ function PromoBanner() {
   const items = [...descuentos, ...descuentos];
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-r from-indigo-700 via-indigo-600 to-fuchsia-600 text-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center gap-3">
-        <span className="flex items-center gap-2 font-extrabold text-sm whitespace-nowrap flex-shrink-0">
-          <i className="fa-solid fa-tags text-amber-300"></i>
+    <div className="relative overflow-hidden bg-[#6f1719] text-white shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-3 py-2.5">
+        <span className="flex shrink-0 items-center gap-2 whitespace-nowrap text-sm font-extrabold">
+          <i className="fa-solid fa-tags text-[#edc978]"></i>
           <span>¡Promociones!</span>
         </span>
         <div className="relative flex-1 overflow-hidden">
-          <div className="flex gap-8 animate-[promo-marquee_28s_linear_infinite] whitespace-nowrap will-change-transform">
+          <div className="flex w-max gap-8 whitespace-nowrap motion-safe:animate-[promo-marquee_28s_linear_infinite]">
             {items.map((d, i) => (
               <span key={`${d.id}-${i}`} className="inline-flex items-center gap-2 text-sm font-medium">
-                <span className="inline-flex items-center justify-center bg-amber-300 text-indigo-900 font-extrabold text-xs px-2 py-0.5 rounded-full">
+                <span className="inline-flex items-center justify-center rounded-full bg-[#edc978] px-2 py-0.5 text-xs font-extrabold text-[#3f0a0b]">
                   {etiqueta(d)}
                 </span>
-                <span className="text-white/95">
+                <span className="text-white">
                   {d.banner_texto || d.nombre}
                 </span>
                 {d.temporada ? (
-                  <span className="text-white/70 text-xs italic">· {d.temporada}</span>
+                  <span className="text-white/75 text-xs italic">· {d.temporada}</span>
                 ) : null}
                 <i className="fa-solid fa-circle text-[4px] text-white/40 ml-2"></i>
               </span>
@@ -54,7 +54,7 @@ function PromoBanner() {
 }
 
 export default function StoreView() {
-  const { currentCategory, setCurrentCategory, categories, sucursalActual } = useApp();
+  const { currentCategory, setCurrentCategory, categories, sucursalActual, switchView } = useApp();
   const [search, setSearch] = useState('');
   const anchorRef = useRef(null);
 
@@ -62,55 +62,109 @@ export default function StoreView() {
     anchorRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const featuredCategories = categories.filter((category) => category !== 'Todos').slice(0, 4);
+  const categoryIcon = (category) => {
+    const name = category.toLowerCase();
+    if (name.includes('libro') || name.includes('lect')) return 'fa-book-open';
+    if (name.includes('papel') || name.includes('arte') || name.includes('escrit')) return 'fa-pen-nib';
+    if (name.includes('escolar') || name.includes('útil') || name.includes('util')) return 'fa-graduation-cap';
+    if (name.includes('oficina') || name.includes('organiz')) return 'fa-briefcase';
+    return 'fa-layer-group';
+  };
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-12 pb-12">
       <PromoBanner />
-      <div className="pt-6">
+      <div className="mx-auto max-w-7xl px-4 pt-2 sm:px-6 lg:px-8">
         <HeroSlider scrollToProducts={scrollToProducts} />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div ref={anchorRef} className="space-y-6 pt-4">
+      <div className="mx-auto max-w-7xl space-y-12 px-4 sm:px-6 lg:px-8">
+        {featuredCategories.length > 0 && (
+          <section aria-labelledby="featured-categories-title">
+            <div className="mb-5 text-center">
+              <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#9e2a2b]">Explora la tienda</span>
+              <h2 id="featured-categories-title" className="mt-1 font-serif text-2xl font-bold text-[#3f0a0b] sm:text-3xl">Encuentra tu próxima idea</h2>
+            </div>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+              {featuredCategories.map((category) => (
+                <button
+                  type="button"
+                  key={category}
+                  onClick={() => {
+                    setCurrentCategory(category);
+                    setSearch('');
+                    scrollToProducts();
+                  }}
+                  className={`group rounded-2xl border p-4 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md sm:p-5 ${currentCategory === category ? 'border-[#9e2a2b] bg-[#fdf3f3]' : 'border-[#f4ece1] bg-white hover:border-[#e8dbca]'}`}
+                >
+                  <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#fdf3f3] text-xl text-[#9e2a2b] transition group-hover:bg-[#9e2a2b] group-hover:text-white">
+                    <i className={`fa-solid ${categoryIcon(category)}`} aria-hidden="true"></i>
+                  </span>
+                  <span className="block font-bold text-sm text-[#3f0a0b]">{category}</span>
+                  <span className="mt-1 block text-xs text-[#6f1719]/70">Ver productos</span>
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section ref={anchorRef} aria-labelledby="catalog-title" className="scroll-mt-36 space-y-5">
           {sucursalActual ? (
-            <div className="flex items-center gap-2 bg-indigo-50 border border-indigo-200 text-indigo-800 rounded-xl px-4 py-2.5 text-sm">
-              <i className="fa-solid fa-location-dot text-indigo-500"></i>
-              <span>Mostrando disponibilidad de la sucursal <span className="font-bold">{sucursalActual.nombre}</span>. Cambiá de sucursal en la parte superior.</span>
+            <div className="flex items-center gap-2 rounded-xl border border-[#f7cdcd] bg-[#fdf3f3] px-4 py-2.5 text-sm text-[#6f1719]">
+              <i className="fa-solid fa-location-dot text-[#9e2a2b]"></i>
+              <span>Disponibilidad de <span className="font-bold">{sucursalActual.nombre}</span>. Cambia la sucursal desde la barra superior.</span>
             </div>
           ) : (
-            <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl px-4 py-2.5 text-sm">
-              <i className="fa-solid fa-circle-info text-amber-500"></i>
-              <span>Elegí una sucursal arriba para ver la disponibilidad real de cada producto en esa tienda.</span>
+            <div className="flex items-center gap-2 rounded-xl border border-[#edc978]/60 bg-[#fff9e9] px-4 py-2.5 text-sm text-[#6f4a12]">
+              <i className="fa-solid fa-circle-info text-[#a66a13]"></i>
+              <span>Elige una sucursal en la parte superior para consultar la disponibilidad de cada producto.</span>
             </div>
           )}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex items-center space-x-2 overflow-x-auto pb-2 md:pb-0">
+          <div className="flex flex-col gap-4 border-b border-[#e8dbca] pb-5 md:flex-row md:items-end md:justify-between">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-[0.16em] text-[#9e2a2b]">Catálogo</span>
+              <h2 id="catalog-title" className="mt-1 font-serif text-2xl font-bold text-[#3f0a0b] sm:text-3xl">Productos para cada día</h2>
+              <p className="mt-1 text-sm text-[#6f1719]/70">Explora las categorías y encuentra lo que necesitas.</p>
+            </div>
+
+          </div>
+
+          <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1">
               {categories.map((cat) => (
                 <button
+                  type="button"
                   key={cat}
                   onClick={() => setCurrentCategory(cat)}
-                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap ${currentCategory === cat ? 'bg-indigo-600 text-white shadow' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
+                  aria-pressed={currentCategory === cat}
+                  className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${currentCategory === cat ? 'bg-[#9e2a2b] text-white shadow-sm' : 'border border-[#e8dbca] bg-white text-[#6f1719] hover:border-[#9e2a2b] hover:bg-[#fdf3f3]'}`}
                 >
                   {cat}
                 </button>
               ))}
             </div>
 
-            <div className="relative min-w-[280px]">
-              <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+            <div className="relative w-full xl:max-w-sm">
+              <label htmlFor="catalog-search" className="sr-only">Buscar en el catálogo</label>
+              <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-[#9e2a2b]">
                 <i className="fa-solid fa-magnifying-glass text-sm"></i>
               </span>
               <input
-                type="text"
+                id="catalog-search"
+                type="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Buscar producto, materia..."
-                className="w-full pl-10 pr-9 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm transition-all"
+                placeholder="Buscar producto o materia..."
+                className="w-full rounded-full border border-[#e8dbca] bg-white py-3 pl-11 pr-10 text-sm text-[#3f0a0b] shadow-sm transition placeholder:text-[#8f7774] focus:outline-none focus:ring-2 focus:ring-[#9e2a2b]/30"
               />
               {search && (
                 <button
+                  type="button"
                   onClick={() => setSearch('')}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700 transition-colors"
+                  className="absolute inset-y-0 right-0 flex items-center pr-4 text-[#8f7774] transition hover:text-[#6f1719]"
                   title="Limpiar búsqueda"
+                  aria-label="Limpiar búsqueda"
                 >
                   <i className="fa-solid fa-circle-xmark"></i>
                 </button>
@@ -119,7 +173,22 @@ export default function StoreView() {
           </div>
 
           <ProductGrid search={search} />
-        </div>
+        </section>
+
+        <section aria-label="Servicios de la librería" className="grid gap-4 md:grid-cols-3">
+          <button onClick={() => switchView('prints')} className="flex items-center gap-4 rounded-2xl border border-[#f4ece1] bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#fdf3f3] text-xl text-[#9e2a2b]"><i className="fa-solid fa-print" aria-hidden="true"></i></span>
+            <span><span className="block font-bold text-[#3f0a0b]">Servicio de impresiones</span><span className="mt-1 block text-xs text-[#6f1719]/70">Envía tu archivo y consulta el costo estimado.</span></span>
+          </button>
+          <div className="flex items-center gap-4 rounded-2xl border border-[#f4ece1] bg-white p-5 shadow-sm">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#fff9e9] text-xl text-[#a66a13]"><i className="fa-solid fa-location-dot" aria-hidden="true"></i></span>
+            <span><span className="block font-bold text-[#3f0a0b]">Consulta por sucursal</span><span className="mt-1 block text-xs text-[#6f1719]/70">{sucursalActual ? `Viendo ${sucursalActual.nombre}.` : 'Elige una sucursal para consultar existencias.'}</span></span>
+          </div>
+          <div className="flex items-center gap-4 rounded-2xl border border-[#f4ece1] bg-white p-5 shadow-sm">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#fdf3f3] text-xl text-[#9e2a2b]"><i className="fa-solid fa-tags" aria-hidden="true"></i></span>
+            <span><span className="block font-bold text-[#3f0a0b]">Promociones</span><span className="mt-1 block text-xs text-[#6f1719]/70">Los descuentos activos se identifican junto al producto en el catálogo.</span></span>
+          </div>
+        </section>
       </div>
     </div>
   );

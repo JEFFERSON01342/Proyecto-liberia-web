@@ -1,71 +1,73 @@
 import { useApp } from '../context/AppContext';
 
 export default function Footer() {
-  const { sucursales, sucursalId, setSucursal } = useApp();
+  const { sucursales, sucursalId, setSucursal, switchView } = useApp();
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-slate-900 text-slate-300 mt-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Marca */}
-          <div className="space-y-3">
-            <div className="flex items-center space-x-3">
-              <div className="bg-white rounded-xl shadow flex items-center justify-center w-10 h-10 overflow-hidden">
-                <img src="/brand-mark.svg" alt="Logotipo de Librería Lisjuashde" className="w-full h-full object-contain p-1" />
+    <footer className="mt-8 border-t border-[#e8dbca] bg-white text-[#3f0a0b]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
+          <div className="space-y-4 md:col-span-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl border border-[#f4ece1] bg-[#fbf7f1] shadow-sm">
+                <img src="/brand-mark.svg" alt="Logotipo de Librería Lisjuashde" className="h-full w-full object-contain p-0.5" />
               </div>
               <div>
-                <h3 className="font-bold text-white text-lg leading-tight">Librería Lisjuashde</h3>
-                <p className="text-xs text-slate-400">Materiales, Impresiones y Útiles</p>
+                <h3 className="font-serif text-lg font-bold leading-tight">Librería Lisjuashde</h3>
+                <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#9e2a2b]">Materiales · Impresiones · Útiles</p>
               </div>
             </div>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Reservá tus útiles en línea y pasá a recogerlos en la sucursal que más te quede cerca.
+            <p className="max-w-sm text-sm leading-relaxed text-[#6f1719]/75">
+              Explora el catálogo, consulta disponibilidad por sucursal y solicita impresiones desde la tienda en línea.
             </p>
+            <button onClick={() => switchView('prints')} className="inline-flex items-center gap-2 rounded-xl bg-[#9e2a2b] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#871f21]">
+              <i className="fa-solid fa-print" aria-hidden="true"></i>
+              Servicio de impresiones
+            </button>
           </div>
 
-          {/* Sucursales */}
-          <div className="md:col-span-2">
-            <h4 className="font-bold text-white text-sm uppercase tracking-wide mb-4 flex items-center gap-2">
-              <i className="fa-solid fa-location-dot text-amber-400"></i> Nuestras sucursales
+          <div className="md:col-span-8">
+            <h4 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-[#3f0a0b]">
+              <i className="fa-solid fa-location-dot text-[#9e2a2b]"></i> Sucursales y contacto
             </h4>
             {(!sucursales || sucursales.length === 0) ? (
-              <p className="text-sm text-slate-500">Pronto publicaremos la información de nuestras sucursales.</p>
+              <p className="text-sm text-[#6f1719]/65">La información de las sucursales no está disponible por el momento.</p>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {sucursales.map((s) => {
                   const activa = s.id === sucursalId;
                   return (
                     <div
                       key={s.id}
-                      className={`rounded-2xl border p-4 transition-all ${activa ? 'border-amber-400 bg-slate-800' : 'border-slate-700 bg-slate-800/40'}`}
+                      className={`rounded-2xl border p-4 transition-all ${activa ? 'border-[#9e2a2b] bg-[#fdf3f3]' : 'border-[#f4ece1] bg-[#fbf7f1]/70'}`}
                     >
-                      <div className="flex items-center justify-between mb-2">
-                        <h5 className="font-bold text-white text-sm flex items-center gap-2">
-                          <i className="fa-solid fa-store text-indigo-400"></i> {s.nombre}
+                      <div className="mb-2 flex items-center justify-between gap-2">
+                        <h5 className="flex items-center gap-2 text-sm font-bold text-[#3f0a0b]">
+                          <i className="fa-solid fa-store text-[#9e2a2b]"></i> {s.nombre}
                         </h5>
                         {activa && (
-                          <span className="text-[10px] font-bold uppercase bg-amber-400 text-slate-900 px-2 py-0.5 rounded-full">Elegida</span>
+                          <span className="rounded-full bg-[#edc978] px-2 py-0.5 text-[10px] font-bold uppercase text-[#3f0a0b]">Elegida</span>
                         )}
                       </div>
                       {s.direccion && (
-                        <p className="text-xs text-slate-400 flex items-start gap-2 mb-1">
-                          <i className="fa-solid fa-map-pin text-slate-500 mt-0.5"></i>
+                        <p className="mb-1 flex items-start gap-2 text-xs text-[#6f1719]/70">
+                          <i className="fa-solid fa-map-pin mt-0.5 text-[#9e2a2b]"></i>
                           <span>{s.direccion}</span>
                         </p>
                       )}
                       {s.telefono && (
-                        <p className="text-xs text-slate-400 flex items-center gap-2">
-                          <i className="fa-solid fa-phone text-slate-500"></i>
-                          <a href={`tel:${s.telefono}`} className="hover:text-white transition-colors">{s.telefono}</a>
+                        <p className="flex items-center gap-2 text-xs text-[#6f1719]/70">
+                          <i className="fa-solid fa-phone text-[#9e2a2b]"></i>
+                          <a href={`tel:${s.telefono}`} className="transition-colors hover:text-[#9e2a2b]">{s.telefono}</a>
                         </p>
                       )}
                       {!activa && (
                         <button
                           onClick={() => setSucursal(s.id)}
-                          className="mt-3 text-xs font-semibold text-amber-400 hover:text-amber-300 transition-colors"
+                          className="mt-3 text-xs font-semibold text-[#9e2a2b] transition-colors hover:text-[#6f1719]"
                         >
-                          Ver disponibilidad aquí →
+                          Consultar disponibilidad aquí →
                         </button>
                       )}
                     </div>
@@ -76,8 +78,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-800 mt-8 pt-6 text-center text-xs text-slate-500">
-          © {year} Librería Lisjuashde. Todos los derechos reservados.
+        <div className="mt-8 border-t border-[#f4ece1] pt-6 text-center text-xs text-[#6f1719]/60">
+          © {year} Librería Lisjuashde
         </div>
       </div>
     </footer>

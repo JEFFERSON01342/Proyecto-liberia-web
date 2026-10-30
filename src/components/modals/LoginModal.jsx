@@ -35,6 +35,15 @@ export default function LoginModal() {
     }
   }, [loginModalOpen]);
 
+  useEffect(() => {
+    if (!loginModalOpen) return undefined;
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') closeLoginModal();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [loginModalOpen, closeLoginModal]);
+
   if (!loginModalOpen) return null;
 
   const onLogin = async (e) => {
@@ -62,31 +71,32 @@ export default function LoginModal() {
     enterGuest({ nombre: guestName, telefono: guestPhone });
   };
 
-  const inputCls = 'w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20';
+  const inputCls = 'w-full rounded-xl border border-[#e8dbca] bg-[#fbf7f1] px-4 py-3 text-sm outline-none transition focus:border-[#9e2a2b] focus:ring-2 focus:ring-[#9e2a2b]/20';
   const labelCls = 'mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500';
-  const tabActive = 'flex-1 rounded-xl bg-indigo-600 px-3 py-2 text-xs font-bold text-white shadow-sm transition-all';
+  const tabActive = 'flex-1 rounded-xl bg-[#9e2a2b] px-3 py-2 text-xs font-bold text-white shadow-sm transition-all';
   const tabInactive = 'flex-1 rounded-xl px-3 py-2 text-xs font-semibold text-slate-500 hover:text-slate-700 transition-all';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-[#3f0a0b]/60 backdrop-blur-sm"
         onClick={closeLoginModal}
       />
 
       {/* Modal */}
-      <div className="relative w-full sm:max-w-md bg-white sm:rounded-3xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom duration-300">
+      <div role="dialog" aria-modal="true" aria-labelledby="login-modal-title" className="relative max-h-[90dvh] w-full overflow-y-auto bg-white shadow-2xl animate-in slide-in-from-bottom duration-300 sm:max-w-md sm:rounded-3xl">
 
         {/* Header decorativo */}
-        <div className="bg-gradient-to-br from-indigo-600 to-indigo-800 px-6 pt-6 pb-8 text-white relative overflow-hidden">
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#9e2a2b] to-[#3f0a0b] px-6 pb-8 pt-6 text-white">
           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:18px_18px]" />
 
           {/* Botón cerrar */}
           <button
             onClick={closeLoginModal}
-            className="absolute top-4 right-4 text-indigo-300 hover:text-white w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-all"
-            aria-label="Cerrar"
+            className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full text-white/80 transition-all hover:bg-white/15 hover:text-white"
+            aria-label="Cerrar ventana y seguir navegando"
+            title="Seguir navegando sin iniciar sesión"
           >
             <i className="fa-solid fa-xmark text-base" />
           </button>
@@ -96,23 +106,23 @@ export default function LoginModal() {
               <i className="fa-solid fa-lock text-xl" />
             </div>
             <div>
-              <h2 className="font-extrabold text-lg leading-tight">Para continuar</h2>
-              <p className="text-indigo-200 text-sm">Inicia sesión o entra como invitado</p>
+              <h2 id="login-modal-title" className="font-extrabold text-lg leading-tight">Para continuar</h2>
+              <p className="text-[#f4ece1] text-sm">Inicia sesión o continúa como invitado</p>
             </div>
           </div>
 
           {/* Beneficios rápidos */}
-          <div className="relative flex gap-4 text-xs text-indigo-100 mt-2">
+          <div className="relative mt-2 flex flex-wrap gap-x-4 gap-y-2 text-xs text-[#f4ece1]">
             <span className="flex items-center gap-1.5">
-              <i className="fa-solid fa-circle-check text-amber-400" />
+              <i className="fa-solid fa-circle-check text-[#edc978]" />
               Reserva pedidos
             </span>
             <span className="flex items-center gap-1.5">
-              <i className="fa-solid fa-circle-check text-amber-400" />
+              <i className="fa-solid fa-circle-check text-[#edc978]" />
               Historial de compras
             </span>
             <span className="flex items-center gap-1.5">
-              <i className="fa-solid fa-circle-check text-amber-400" />
+              <i className="fa-solid fa-circle-check text-[#edc978]" />
               Impresiones online
             </span>
           </div>
@@ -161,7 +171,7 @@ export default function LoginModal() {
               <button
                 type="submit"
                 disabled={busy}
-                className="w-full rounded-xl bg-indigo-600 py-3.5 text-sm font-bold text-white shadow-lg transition hover:bg-indigo-700 active:scale-[0.98] disabled:opacity-60"
+                className="w-full rounded-xl bg-[#9e2a2b] py-3.5 text-sm font-bold text-white shadow-lg transition hover:bg-[#871f21] active:scale-[0.98] disabled:opacity-60"
               >
                 {busy ? (
                   <span className="flex items-center justify-center gap-2">
@@ -175,7 +185,7 @@ export default function LoginModal() {
               </button>
               <p className="text-center text-xs text-slate-400">
                 ¿No tienes cuenta?{' '}
-                <button type="button" onClick={() => setMode('register')} className="text-indigo-600 font-semibold hover:underline">
+                <button type="button" onClick={() => setMode('register')} className="font-semibold text-[#9e2a2b] hover:underline">
                   Créala aquí
                 </button>
               </p>
@@ -212,7 +222,7 @@ export default function LoginModal() {
               </div>
               <button
                 type="submit" disabled={busy}
-                className="w-full rounded-xl bg-indigo-600 py-3.5 text-sm font-bold text-white shadow-lg transition hover:bg-indigo-700 active:scale-[0.98] disabled:opacity-60"
+                className="w-full rounded-xl bg-[#9e2a2b] py-3.5 text-sm font-bold text-white shadow-lg transition hover:bg-[#871f21] active:scale-[0.98] disabled:opacity-60"
               >
                 {busy ? (
                   <span className="flex items-center justify-center gap-2"><i className="fa-solid fa-spinner fa-spin" />Creando cuenta...</span>
@@ -237,18 +247,24 @@ export default function LoginModal() {
               </div>
               <button
                 type="submit"
-                className="w-full rounded-xl bg-amber-500 py-3.5 text-sm font-bold text-slate-900 shadow-lg transition hover:bg-amber-400 active:scale-[0.98] flex items-center justify-center gap-2"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#edc978] py-3.5 text-sm font-bold text-[#3f0a0b] shadow-lg transition hover:bg-[#f4d99b] active:scale-[0.98]"
               >
                 <i className="fa-solid fa-arrow-right" />Entrar como invitado
               </button>
               <p className="text-center text-xs text-slate-400">
                 ¿Quieres ver tu historial?{' '}
-                <button type="button" onClick={() => setMode('register')} className="text-indigo-600 font-semibold hover:underline">
+                <button type="button" onClick={() => setMode('register')} className="font-semibold text-[#9e2a2b] hover:underline">
                   Crea una cuenta
                 </button>
               </p>
             </form>
           )}
+
+          <div className="mt-5 border-t border-[#f4ece1] pt-4 text-center">
+            <button type="button" onClick={closeLoginModal} className="text-sm font-semibold text-[#6f1719] underline decoration-[#c99b94] underline-offset-4 transition hover:text-[#9e2a2b]">
+              Seguir navegando sin iniciar sesión
+            </button>
+          </div>
         </div>
       </div>
     </div>

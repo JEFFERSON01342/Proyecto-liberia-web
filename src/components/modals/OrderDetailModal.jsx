@@ -13,7 +13,7 @@ export default function OrderDetailModal() {
     <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
         <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-          <h3 className="font-bold text-lg text-slate-900">Detalle del Pedido {order.numero_orden ? <span className="text-indigo-600">{order.numero_orden}</span> : 'Reservado'}</h3>
+          <h3 className="font-bold text-lg text-slate-900">Detalle del Pedido {order.numero_orden ? <span className="text-[#9e2a2b]">{order.numero_orden}</span> : 'Reservado'}</h3>
           <button onClick={closeOrderModal} className="text-slate-400 hover:text-slate-600 p-2 rounded-lg"><i className="fa-solid fa-xmark text-lg"></i></button>
         </div>
         <div className="p-6 space-y-4">
@@ -37,7 +37,7 @@ export default function OrderDetailModal() {
             </div>
             <div className="pt-2 border-t border-slate-200 flex items-center justify-between font-bold text-base">
               <span>Total:</span>
-              <span className="text-indigo-600">C${parseFloat(order.total).toFixed(2)}</span>
+              <span className="text-[#9e2a2b]">C${parseFloat(order.total).toFixed(2)}</span>
             </div>
           </div>
         </div>

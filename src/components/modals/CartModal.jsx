@@ -94,7 +94,7 @@ export default function CartModal() {
       <div className="bg-white w-full max-w-xl rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
         <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <i className="fa-solid fa-bag-shopping text-indigo-600 text-lg"></i>
+            <i className="fa-solid fa-bag-shopping text-[#9e2a2b] text-lg"></i>
             <h3 className="font-bold text-lg text-slate-900">Carrito y Reserva de Pedido</h3>
           </div>
           <button onClick={() => setCartModalOpen(false)} className="text-slate-400 hover:text-slate-600 p-2 rounded-lg"><i className="fa-solid fa-xmark text-lg"></i></button>
@@ -115,9 +115,9 @@ export default function CartModal() {
                     onClick={() => setLightboxItem({ src: item.image, alt: item.name })}
                     title="Clic para ampliar imagen"
                   >
-                    <img src={item.image} className="w-12 h-12 object-contain bg-white rounded-xl p-1 border border-slate-200 group-hover:border-indigo-400 transition" onError={(e) => { e.target.src = 'https://placehold.co/100x100/png?text=Util'; }} />
+                    <img src={item.image} className="w-12 h-12 object-contain bg-white rounded-xl p-1 border border-slate-200 group-hover:border-[#9e2a2b] transition" onError={(e) => { e.target.src = 'https://placehold.co/100x100/png?text=Util'; }} />
                     <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span className="bg-white/85 rounded-full w-5 h-5 flex items-center justify-center shadow text-indigo-600">
+                      <span className="bg-white/85 rounded-full w-5 h-5 flex items-center justify-center shadow text-[#9e2a2b]">
                         <i className="fa-solid fa-magnifying-glass-plus text-[9px]"></i>
                       </span>
                     </span>
@@ -130,7 +130,7 @@ export default function CartModal() {
                         <span className="text-rose-600">C${precioEfectivo(item).toFixed(2)} c/u</span>
                       </span>
                     ) : (
-                      <span className="text-xs text-indigo-600 font-semibold">C${item.price.toFixed(2)} c/u</span>
+                      <span className="text-xs font-semibold text-[#9e2a2b]">C${item.price.toFixed(2)} c/u</span>
                     )}
                   </div>
                 </div>
@@ -156,7 +156,7 @@ export default function CartModal() {
           )}
           <div className="flex items-center justify-between text-lg font-bold">
             <span>Total a Pagar:</span>
-            <span className="text-indigo-600">C${total.toFixed(2)}</span>
+            <span className="text-[#9e2a2b]">C${total.toFixed(2)}</span>
           </div>
           <p className="text-xs text-slate-500">
             La promoción y el total final se verifican al confirmar el pedido.
@@ -166,23 +166,23 @@ export default function CartModal() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">Nombre Completo</label>
-                <input type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} placeholder="Ej. María Pérez" className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+                <input type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} placeholder="Ej. María Pérez" className="w-full rounded-xl border border-[#e8dbca] bg-[#fbf7f1] px-3 py-2 text-sm text-[#3f0a0b] focus:outline-none focus:ring-2 focus:ring-[#9e2a2b]/20" />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">Teléfono</label>
-                <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Ej. 8888-8888" className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+                <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Ej. 8888-8888" className="w-full rounded-xl border border-[#e8dbca] bg-[#fbf7f1] px-3 py-2 text-sm text-[#3f0a0b] focus:outline-none focus:ring-2 focus:ring-[#9e2a2b]/20" />
               </div>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">Entrega</label>
               <div className="grid grid-cols-2 gap-3">
-                <label className="flex items-center space-x-2 p-2.5 bg-white border border-slate-300 rounded-xl cursor-pointer hover:border-indigo-500 transition-all">
-                  <input type="radio" name="entrega" value="recoger" checked={tipoEntrega === 'recoger'} onChange={(e) => setTipoEntrega(e.target.value)} className="text-indigo-600 focus:ring-indigo-500" />
-                  <span className="text-sm font-medium flex items-center space-x-1.5"><i className="fa-solid fa-store text-indigo-600"></i> <span>Recoger</span></span>
+                <label className="flex items-center space-x-2 p-2.5 bg-white border border-[#e8dbca] rounded-xl cursor-pointer hover:border-[#9e2a2b] transition-all">
+                  <input type="radio" name="entrega" value="recoger" checked={tipoEntrega === 'recoger'} onChange={(e) => setTipoEntrega(e.target.value)} className="accent-[#9e2a2b] focus:ring-[#9e2a2b]" />
+                  <span className="text-sm font-medium flex items-center space-x-1.5"><i className="fa-solid fa-store text-[#9e2a2b]"></i> <span>Recoger</span></span>
                 </label>
-                <label className="flex items-center space-x-2 p-2.5 bg-white border border-slate-300 rounded-xl cursor-pointer hover:border-indigo-500 transition-all">
-                  <input type="radio" name="entrega" value="domicilio" checked={tipoEntrega === 'domicilio'} onChange={(e) => setTipoEntrega(e.target.value)} className="text-indigo-600 focus:ring-indigo-500" />
+                <label className="flex items-center space-x-2 p-2.5 bg-white border border-[#e8dbca] rounded-xl cursor-pointer hover:border-[#9e2a2b] transition-all">
+                  <input type="radio" name="entrega" value="domicilio" checked={tipoEntrega === 'domicilio'} onChange={(e) => setTipoEntrega(e.target.value)} className="accent-[#9e2a2b] focus:ring-[#9e2a2b]" />
                   <span className="text-sm font-medium flex items-center space-x-1.5"><i className="fa-solid fa-truck text-amber-600"></i> <span>Domicilio</span></span>
                 </label>
               </div>
@@ -197,7 +197,7 @@ export default function CartModal() {
                   rows={2}
                   maxLength={500}
                   placeholder="Barrio, dirección y referencias"
-                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                  className="w-full rounded-xl border border-[#e8dbca] bg-[#fbf7f1] px-3 py-2 text-sm text-[#3f0a0b] focus:outline-none focus:ring-2 focus:ring-[#9e2a2b]/20"
                 />
               </div>
             )}
@@ -210,7 +210,7 @@ export default function CartModal() {
                 <select
                   value={sucursalId || ''}
                   onChange={(e) => setSucursal(e.target.value || null)}
-                  className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                  className="w-full rounded-xl border border-[#e8dbca] bg-[#fbf7f1] px-3 py-2 text-sm text-[#3f0a0b] focus:outline-none focus:ring-2 focus:ring-[#9e2a2b]/20"
                 >
                   <option value="">Selecciona una sucursal…</option>
                   {sucursales.map((s) => (
@@ -234,28 +234,28 @@ export default function CartModal() {
             <div>
               <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">Método de Pago</label>
               <div className="grid grid-cols-2 gap-3">
-                <label className="flex items-center space-x-2 p-2.5 bg-white border border-slate-300 rounded-xl cursor-pointer hover:border-indigo-500 transition-all">
-                  <input type="radio" name="paymentMethod" value="local" checked={paymentMethod === 'local'} onChange={(e) => setPaymentMethod(e.target.value)} className="text-indigo-600 focus:ring-indigo-500" />
+                <label className="flex items-center space-x-2 p-2.5 bg-white border border-[#e8dbca] rounded-xl cursor-pointer hover:border-[#9e2a2b] transition-all">
+                  <input type="radio" name="paymentMethod" value="local" checked={paymentMethod === 'local'} onChange={(e) => setPaymentMethod(e.target.value)} className="accent-[#9e2a2b] focus:ring-[#9e2a2b]" />
                   <span className="text-sm font-medium flex items-center space-x-1.5"><i className="fa-solid fa-shop text-amber-600"></i> <span>En el Local</span></span>
                 </label>
-                <label className="flex items-center space-x-2 p-2.5 bg-white border border-slate-300 rounded-xl cursor-pointer hover:border-indigo-500 transition-all">
-                  <input type="radio" name="paymentMethod" value="tarjeta" checked={paymentMethod === 'tarjeta'} onChange={(e) => setPaymentMethod(e.target.value)} className="text-indigo-600 focus:ring-indigo-500" />
-                  <span className="text-sm font-medium flex items-center space-x-1.5"><i className="fa-solid fa-credit-card text-indigo-600"></i> <span>Tarjeta simulada</span></span>
+                <label className="flex items-center space-x-2 p-2.5 bg-white border border-[#e8dbca] rounded-xl cursor-pointer hover:border-[#9e2a2b] transition-all">
+                  <input type="radio" name="paymentMethod" value="tarjeta" checked={paymentMethod === 'tarjeta'} onChange={(e) => setPaymentMethod(e.target.value)} className="accent-[#9e2a2b] focus:ring-[#9e2a2b]" />
+                  <span className="text-sm font-medium flex items-center space-x-1.5"><i className="fa-solid fa-credit-card text-[#9e2a2b]"></i> <span>Tarjeta simulada</span></span>
                 </label>
-                <label className="flex items-center space-x-2 p-2.5 bg-white border border-slate-300 rounded-xl cursor-pointer hover:border-indigo-500 transition-all">
-                  <input type="radio" name="paymentMethod" value="transferencia" checked={paymentMethod === 'transferencia'} onChange={(e) => setPaymentMethod(e.target.value)} className="text-indigo-600 focus:ring-indigo-500" />
-                  <span className="text-sm font-medium flex items-center space-x-1.5"><i className="fa-solid fa-building-columns text-indigo-600"></i> <span>Transferencia</span></span>
+                <label className="flex items-center space-x-2 p-2.5 bg-white border border-[#e8dbca] rounded-xl cursor-pointer hover:border-[#9e2a2b] transition-all">
+                  <input type="radio" name="paymentMethod" value="transferencia" checked={paymentMethod === 'transferencia'} onChange={(e) => setPaymentMethod(e.target.value)} className="accent-[#9e2a2b] focus:ring-[#9e2a2b]" />
+                  <span className="text-sm font-medium flex items-center space-x-1.5"><i className="fa-solid fa-building-columns text-[#9e2a2b]"></i> <span>Transferencia</span></span>
                 </label>
               </div>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">Notas (opcional)</label>
-              <input type="text" value={notas} onChange={(e) => setNotas(e.target.value)} placeholder="Ej. Llamar antes de entregar" className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+              <input type="text" value={notas} onChange={(e) => setNotas(e.target.value)} placeholder="Ej. Llamar antes de entregar" className="w-full rounded-xl border border-[#e8dbca] bg-[#fbf7f1] px-3 py-2 text-sm text-[#3f0a0b] focus:outline-none focus:ring-2 focus:ring-[#9e2a2b]/20" />
             </div>
           </div>
 
-          <button onClick={handleCheckout} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
+          <button onClick={handleCheckout} className="w-full rounded-xl bg-[#9e2a2b] py-3 font-bold text-white shadow-md transition-all hover:bg-[#871f21] flex items-center justify-center space-x-2">
             <i className="fa-solid fa-check-circle"></i>
             <span>Confirmar y Reservar Pedido</span>
           </button>

@@ -36,10 +36,10 @@ export default function App() {
   // La tienda es pública — el modal de login aparece solo cuando el cliente
   // intenta añadir al carrito, enviar impresiones o ver su cuenta.
   return (
-    <>
+    <div className="min-h-screen flex flex-col bg-[#fbf7f1] text-[#3f0a0b]">
       <Header />
 
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1">
         {currentView === 'store' && <StoreView />}
         {currentView === 'prints' && <PrintsView />}
         {currentView === 'access' && <AccessView />}
@@ -54,6 +54,6 @@ export default function App() {
       <OrderConfirmationModal />
       <ConfirmModal />
       <Toast />
-    </>
+    </div>
   );
 }

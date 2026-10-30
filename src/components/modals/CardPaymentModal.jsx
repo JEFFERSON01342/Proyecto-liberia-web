@@ -97,7 +97,7 @@ export default function CardPaymentModal({ open, onClose, total, customerName, o
         {/* Cabecera */}
         <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <i className="fa-solid fa-credit-card text-indigo-600 text-lg"></i>
+            <i className="fa-solid fa-credit-card text-[#9e2a2b] text-lg"></i>
             <h3 className="font-bold text-lg text-slate-900">Pago con Tarjeta</h3>
           </div>
           {estado === 'form' && (
@@ -122,8 +122,8 @@ export default function CardPaymentModal({ open, onClose, total, customerName, o
         ) : (
           <div className="p-6 space-y-5">
             {/* Tarjeta visual */}
-            <div className="relative h-52 rounded-2xl bg-gradient-to-br from-slate-800 via-slate-900 to-indigo-900 text-white p-5 shadow-xl overflow-hidden">
-              <div className="absolute -top-10 -right-10 w-40 h-40 bg-indigo-500/20 rounded-full blur-2xl"></div>
+            <div className="relative h-52 rounded-2xl bg-gradient-to-br from-[#3f0a0b] via-[#561011] to-[#9e2a2b] text-white p-5 shadow-xl overflow-hidden">
+              <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[#edc978]/20 blur-2xl"></div>
               <div className="absolute -bottom-12 -left-8 w-40 h-40 bg-fuchsia-500/10 rounded-full blur-2xl"></div>
               <div className="relative flex items-start justify-between">
                 <div className="w-11 h-8 rounded-md bg-gradient-to-br from-amber-300 to-amber-500 shadow-inner"></div>
@@ -158,7 +158,7 @@ export default function CardPaymentModal({ open, onClose, total, customerName, o
                   value={numero}
                   onChange={onNumeroChange}
                   placeholder="1234 5678 9012 3456"
-                  className={`w-full px-3 py-2.5 bg-white border rounded-xl text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none ${errores.numero ? 'border-rose-400' : 'border-slate-300'}`}
+                  className={`w-full rounded-xl border bg-[#fbf7f1] px-3 py-2.5 text-sm font-mono text-[#3f0a0b] focus:outline-none focus:ring-2 focus:ring-[#9e2a2b]/20 ${errores.numero ? 'border-rose-400' : 'border-[#e8dbca]'}`}
                 />
                 {errores.numero && <p className="text-xs text-rose-500 mt-1">{errores.numero}</p>}
               </div>
@@ -170,7 +170,7 @@ export default function CardPaymentModal({ open, onClose, total, customerName, o
                   value={titular}
                   onChange={(e) => setTitular(e.target.value.toUpperCase())}
                   placeholder="NOMBRE APELLIDO"
-                  className={`w-full px-3 py-2.5 bg-white border rounded-xl text-sm uppercase focus:ring-2 focus:ring-indigo-500 focus:outline-none ${errores.titular ? 'border-rose-400' : 'border-slate-300'}`}
+                  className={`w-full rounded-xl border bg-[#fbf7f1] px-3 py-2.5 text-sm uppercase text-[#3f0a0b] focus:outline-none focus:ring-2 focus:ring-[#9e2a2b]/20 ${errores.titular ? 'border-rose-400' : 'border-[#e8dbca]'}`}
                 />
                 {errores.titular && <p className="text-xs text-rose-500 mt-1">{errores.titular}</p>}
               </div>
@@ -184,7 +184,7 @@ export default function CardPaymentModal({ open, onClose, total, customerName, o
                     value={exp}
                     onChange={onExpChange}
                     placeholder="MM/AA"
-                    className={`w-full px-3 py-2.5 bg-white border rounded-xl text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none ${errores.exp ? 'border-rose-400' : 'border-slate-300'}`}
+                    className={`w-full rounded-xl border bg-[#fbf7f1] px-3 py-2.5 text-sm font-mono text-[#3f0a0b] focus:outline-none focus:ring-2 focus:ring-[#9e2a2b]/20 ${errores.exp ? 'border-rose-400' : 'border-[#e8dbca]'}`}
                   />
                   {errores.exp && <p className="text-xs text-rose-500 mt-1">{errores.exp}</p>}
                 </div>
@@ -196,7 +196,7 @@ export default function CardPaymentModal({ open, onClose, total, customerName, o
                     value={cvv}
                     onChange={onCvvChange}
                     placeholder="•••"
-                    className={`w-full px-3 py-2.5 bg-white border rounded-xl text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none ${errores.cvv ? 'border-rose-400' : 'border-slate-300'}`}
+                    className={`w-full rounded-xl border bg-[#fbf7f1] px-3 py-2.5 text-sm font-mono text-[#3f0a0b] focus:outline-none focus:ring-2 focus:ring-[#9e2a2b]/20 ${errores.cvv ? 'border-rose-400' : 'border-[#e8dbca]'}`}
                   />
                   {errores.cvv && <p className="text-xs text-rose-500 mt-1">{errores.cvv}</p>}
                 </div>
@@ -207,7 +207,7 @@ export default function CardPaymentModal({ open, onClose, total, customerName, o
             <button
               onClick={handlePagar}
               disabled={estado === 'procesando'}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2"
+              className="w-full rounded-xl bg-[#9e2a2b] py-3 font-bold text-white shadow-md transition-all hover:bg-[#871f21] flex items-center justify-center space-x-2 disabled:cursor-not-allowed disabled:opacity-70"
             >
               {estado === 'procesando' ? (
                 <>

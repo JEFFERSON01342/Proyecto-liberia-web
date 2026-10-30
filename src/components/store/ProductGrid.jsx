@@ -24,7 +24,7 @@ function ImageModal({ product, onClose, onAdd }) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Imagen grande */}
-        <div className="relative bg-slate-50 flex items-center justify-center p-8 min-h-64">
+        <div className="relative flex min-h-64 items-center justify-center bg-[#fbf7f1] p-8">
           <img
             src={product.image}
             alt={product.name}
@@ -52,7 +52,7 @@ function ImageModal({ product, onClose, onAdd }) {
         <div className="p-6 space-y-4">
           <div>
             <div className="flex flex-wrap gap-1.5 mb-2">
-              <span className="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-1 rounded-full font-semibold border border-indigo-100">{product.category}</span>
+              <span className="rounded-full border border-[#f7cdcd] bg-[#fdf3f3] px-2.5 py-1 text-xs font-semibold text-[#6f1719]">{product.category}</span>
               {product.materia && <span className="bg-slate-100 text-slate-600 text-xs px-2.5 py-1 rounded-full font-medium">{product.materia}</span>}
             </div>
             <h3 className="font-extrabold text-slate-900 text-xl leading-snug">{product.name}</h3>
@@ -62,12 +62,12 @@ function ImageModal({ product, onClose, onAdd }) {
           <div className="flex items-center justify-between">
             <div>
               <span className="text-xs text-slate-400 block">Precio</span>
-              <span className="text-2xl font-extrabold text-indigo-600">C${product.price.toFixed(2)}</span>
+              <span className="text-2xl font-extrabold text-[#9e2a2b]">C${product.price.toFixed(2)}</span>
             </div>
             <button
               onClick={() => { onAdd(product.id); onClose(); }}
               disabled={outOfStock}
-              className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white px-5 py-2.5 rounded-xl shadow transition-all flex items-center gap-2 text-sm font-bold active:scale-95"
+              className="flex items-center gap-2 rounded-xl bg-[#9e2a2b] px-5 py-2.5 text-sm font-bold text-white shadow transition-all hover:bg-[#871f21] active:scale-95 disabled:cursor-not-allowed disabled:bg-slate-300"
             >
               <i className="fa-solid fa-cart-plus"></i>
               {outOfStock ? 'Agotado' : 'Reservar'}
@@ -98,17 +98,17 @@ export default function ProductGrid({ search }) {
   if (filtered.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-          <i className="fa-solid fa-magnifying-glass text-slate-400 text-3xl"></i>
+        <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[#f4ece1]">
+          <i className="fa-solid fa-magnifying-glass text-3xl text-[#9e2a2b]/60"></i>
         </div>
-        <p className="text-slate-700 font-semibold text-lg">Sin resultados</p>
-        <p className="text-slate-400 text-sm mt-1">
+        <p className="text-lg font-semibold text-[#3f0a0b]">Sin resultados</p>
+        <p className="mt-1 text-sm text-slate-500">
           {searchVal
-            ? <>No encontramos productos para "<span className="text-indigo-600 font-medium">{searchVal}</span>"</>
+            ? <>No encontramos productos para "<span className="font-medium text-[#9e2a2b]">{searchVal}</span>"</>
             : 'No hay productos disponibles en esta categoría.'}
         </p>
         {searchVal && (
-          <p className="text-slate-400 text-xs mt-2">Intenta con otro nombre o materia</p>
+          <p className="mt-2 text-xs text-slate-500">Intenta con otro nombre o materia</p>
         )}
       </div>
     );
@@ -118,10 +118,10 @@ export default function ProductGrid({ search }) {
     <>
       {/* Contador de resultados */}
       <div className="flex items-center justify-between mb-1">
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-[#6f1719]/65">
           {searchVal || currentCategory !== 'Todos'
-            ? <><span className="font-semibold text-slate-700">{filtered.length}</span> {filtered.length === 1 ? 'producto encontrado' : 'productos encontrados'}{searchVal ? <> · "<span className="text-indigo-600">{searchVal}</span>"</> : ''}</>
-            : <><span className="font-semibold text-slate-700">{filtered.length}</span> productos disponibles</>
+            ? <><span className="font-semibold text-[#3f0a0b]">{filtered.length}</span> {filtered.length === 1 ? 'producto encontrado' : 'productos encontrados'}{searchVal ? <> · "<span className="text-[#9e2a2b]">{searchVal}</span>"</> : ''}</>
+            : <><span className="font-semibold text-[#3f0a0b]">{filtered.length}</span> productos disponibles</>
           }
         </p>
       </div>
@@ -131,10 +131,10 @@ export default function ProductGrid({ search }) {
           const lowStock = p.stock > 0 && p.stock <= 5;
           const promo = getDescuentoParaProducto ? getDescuentoParaProducto(p.id, p.category_id, p.price) : null;
           return (
-            <div key={p.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+            <div key={p.id} className="flex flex-col justify-between overflow-hidden rounded-2xl border border-[#f4ece1] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
               {/* Imagen clicable */}
               <div
-                className="relative p-6 bg-slate-50/50 flex items-center justify-center h-48 group cursor-zoom-in"
+                className="group relative flex h-48 cursor-zoom-in items-center justify-center bg-[#fbf7f1] p-6"
                 onClick={() => setImageModal(p)}
                 title="Clic para ampliar imagen"
               >
@@ -154,7 +154,7 @@ export default function ProductGrid({ search }) {
                 />
                 {/* Lupa en hover */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="bg-white/80 backdrop-blur-sm rounded-full w-9 h-9 flex items-center justify-center shadow text-indigo-600">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-[#9e2a2b] shadow backdrop-blur-sm">
                     <i className="fa-solid fa-magnifying-glass-plus text-base"></i>
                   </span>
                 </div>
@@ -163,9 +163,9 @@ export default function ProductGrid({ search }) {
               {/* Datos del producto */}
               <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
                 <div>
-                  <span className="inline-flex mb-2 bg-indigo-50 text-indigo-700 text-xs px-2.5 py-1 rounded-full font-semibold border border-indigo-100">{p.category}</span>
+                  <span className="mb-2 inline-flex rounded-full border border-[#f7cdcd] bg-[#fdf3f3] px-2.5 py-1 text-xs font-semibold text-[#6f1719]">{p.category}</span>
                   {p.materia && <span className="inline-flex mb-2 ml-1 bg-slate-100 text-slate-600 text-xs px-2.5 py-1 rounded-full font-medium">{p.materia}</span>}
-                  <h4 className="font-bold text-slate-900 text-base leading-snug">{p.name}</h4>
+                  <h4 className="text-base font-bold leading-snug text-[#3f0a0b]">{p.name}</h4>
                   <p className="text-xs text-slate-500 mt-1 line-clamp-2">{p.desc}</p>
                 </div>
                 <div className="flex items-center justify-between pt-2">
@@ -177,13 +177,13 @@ export default function ProductGrid({ search }) {
                         <span className="text-xs text-slate-400 line-through">C${p.price.toFixed(2)}</span>
                       </div>
                     ) : (
-                      <span className="text-lg font-extrabold text-indigo-600">C${p.price.toFixed(2)}</span>
+                      <span className="text-lg font-extrabold text-[#9e2a2b]">C${p.price.toFixed(2)}</span>
                     )}
                   </div>
                   <button
                     onClick={() => addToCart(p.id)}
                     disabled={outOfStock}
-                    className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white p-2.5 rounded-xl shadow transition-all flex items-center justify-center space-x-1 text-sm font-medium active:scale-90"
+                    className="flex items-center justify-center gap-1 rounded-xl bg-[#9e2a2b] p-2.5 text-sm font-medium text-white shadow transition-all hover:bg-[#871f21] active:scale-90 disabled:cursor-not-allowed disabled:bg-slate-300"
                   >
                     <i className="fa-solid fa-cart-plus"></i>
                     <span className="text-xs">{outOfStock ? 'Agotado' : 'Reservar'}</span>

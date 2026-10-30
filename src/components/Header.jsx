@@ -19,81 +19,83 @@ export default function Header() {
 
   const tabClass = (view) =>
     view === currentView
-      ? 'px-3 py-1.5 rounded-lg text-sm font-medium transition-all bg-white text-indigo-700 shadow-sm flex items-center space-x-2'
-      : 'px-3 py-1.5 rounded-lg text-sm font-medium transition-all text-indigo-100 hover:text-white flex items-center space-x-2';
+      ? 'whitespace-nowrap px-3 py-2 rounded-xl text-sm font-semibold transition-all bg-white text-[#7d1d22] shadow-sm flex items-center justify-center gap-2'
+      : 'whitespace-nowrap px-3 py-2 rounded-xl text-sm font-medium transition-all text-[#6f1719] hover:bg-white/70 flex items-center justify-center gap-2';
 
   return (
-    <header className="bg-indigo-600 text-white shadow-md sticky top-0 z-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo y nombre */}
-        <div className="flex items-center space-x-3">
-          <div className="bg-white rounded-xl shadow flex items-center justify-center w-10 h-10 overflow-hidden">
-            <img src="/brand-mark.svg" alt="Logotipo de Librería Lisjuashde" className="w-full h-full object-contain p-1" />
-          </div>
-          <div>
-            <h1 className="font-bold text-lg leading-tight">Librería Lisjuashde</h1>
-            <p className="text-xs text-indigo-200 hidden sm:block">Materiales, Impresiones y Útiles</p>
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-2 sm:space-x-3">
-          {/* Selector de sucursal */}
+    <header className="sticky top-0 z-40 border-b border-[#e8dbca] bg-[#fbf7f1]/95 text-[#3f0a0b] shadow-sm backdrop-blur-md">
+      <div className="bg-[#3f0a0b] text-[#fbf7f1]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-9 flex items-center justify-between gap-3 text-xs">
+          <span className="hidden sm:flex items-center gap-2 text-[#f4ece1]">
+            <i className="fa-solid fa-book-open text-[#edc978]"></i>
+            Una librería para aprender, crear y descubrir
+          </span>
           {sucursales && sucursales.length > 0 && (
-            <div className="flex items-center gap-1.5 bg-indigo-700/60 border border-indigo-500/30 rounded-xl px-2.5 py-1.5">
-              <i className="fa-solid fa-location-dot text-amber-300 text-sm"></i>
+            <label className="ml-auto flex items-center gap-2">
+              <i className="fa-solid fa-location-dot text-[#edc978]"></i>
+              <span className="hidden sm:inline">Disponibilidad en:</span>
               <select
                 value={sucursalId || ''}
                 onChange={(e) => setSucursal(e.target.value || null)}
                 title="Elige la sucursal para ver su disponibilidad"
-                className="bg-transparent text-white text-xs sm:text-sm font-medium focus:outline-none cursor-pointer max-w-[130px]"
+                aria-label="Sucursal para consultar disponibilidad"
+                className="max-w-[155px] cursor-pointer rounded-md border border-white/20 bg-[#561011] px-2 py-1 text-xs font-medium text-white focus:outline-none focus:ring-2 focus:ring-[#edc978]"
               >
                 <option value="" className="text-slate-800">Todas las sucursales</option>
                 {sucursales.map((s) => (
                   <option key={s.id} value={s.id} className="text-slate-800">{s.nombre}</option>
                 ))}
               </select>
-            </div>
+            </label>
           )}
+        </div>
+      </div>
 
-          {/* Navegación */}
-          <div className="bg-indigo-700/60 p-1 rounded-xl flex space-x-1 border border-indigo-500/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid min-h-[76px] grid-cols-[1fr_auto] gap-x-3 gap-y-2 py-3 lg:flex lg:items-center lg:justify-between">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-[#f4ece1] bg-white shadow-sm">
+            <img src="/brand-mark.svg" alt="Logotipo de Librería Lisjuashde" className="h-full w-full object-contain p-0.5" />
+          </div>
+          <div className="min-w-0">
+            <h1 className="whitespace-nowrap font-serif text-lg font-bold leading-tight tracking-tight sm:text-xl">Librería Lisjuashde</h1>
+            <p className="hidden text-[10px] font-medium uppercase tracking-[0.16em] text-[#9e2a2b] sm:block">Materiales · Impresiones · Útiles</p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-end gap-2 sm:gap-3">
+          <nav aria-label="Navegación principal" className="hidden items-center gap-1 rounded-2xl border border-[#f4ece1] bg-[#f4ece1]/80 p-1 lg:flex">
             <button onClick={() => switchView('store')} className={tabClass('store')}>
-              <i className="fa-solid fa-store"></i>
-              <span className="hidden sm:inline">Tienda</span>
+              <i className="fa-solid fa-store" aria-hidden="true"></i><span>Tienda</span>
             </button>
             <button onClick={() => switchView('prints')} className={tabClass('prints')}>
-              <i className="fa-solid fa-print"></i>
-              <span className="hidden sm:inline">Impresiones</span>
+              <i className="fa-solid fa-print" aria-hidden="true"></i><span>Impresiones</span>
             </button>
             <button onClick={() => switchView('access')} className={tabClass('access')}>
-              <i className="fa-solid fa-user"></i>
-              <span className="hidden sm:inline">Mi cuenta</span>
+              <i className="fa-solid fa-user" aria-hidden="true"></i><span>Mi cuenta</span>
             </button>
-          </div>
+          </nav>
 
-          {/* Estado de sesión */}
-          <div className="hidden md:flex items-center gap-2 text-xs">
+          <div className="hidden items-center gap-2 text-xs sm:flex">
             {isAnonymous && (
-              /* Sin sesión → botón de login llamativo */
               <button
                 onClick={() => openLoginModal()}
-                className="flex items-center gap-2 bg-white text-indigo-700 font-bold px-3 py-1.5 rounded-lg shadow hover:bg-indigo-50 transition-all"
+                aria-label="Iniciar sesión"
+                className="flex items-center gap-2 rounded-xl border border-[#e8dbca] bg-white px-3 py-2 font-bold text-[#6f1719] shadow-sm transition hover:bg-[#fdf3f3]"
               >
                 <i className="fa-solid fa-right-to-bracket"></i>
-                <span>Iniciar sesión</span>
+                <span className="hidden xl:inline">Iniciar sesión</span>
               </button>
             )}
 
             {isLoggedIn && (
-              /* Sesión activa */
               <>
-                <span className="text-indigo-100">
-                  Hola, <span className="font-bold text-white">{firstName}</span>
+                <span className="text-[#6f1719]">
+                  Hola, <span className="font-bold text-[#3f0a0b]">{firstName}</span>
                 </span>
                 <button
                   onClick={handleLogout}
                   title="Cerrar sesión"
-                  className="bg-indigo-500/50 hover:bg-indigo-500 px-2 py-1.5 rounded-lg transition-all"
+                  className="rounded-xl bg-[#f4ece1] px-2.5 py-2 text-[#6f1719] transition hover:bg-[#f7cdcd]"
                 >
                   <i className="fa-solid fa-right-from-bracket"></i>
                 </button>
@@ -101,15 +103,14 @@ export default function Header() {
             )}
 
             {isGuest && (
-              /* Modo invitado */
               <>
-                <span className="text-indigo-100">
-                  Invitado: <span className="font-bold text-white">{firstName}</span>
+                <span className="text-[#6f1719]">
+                  Invitado: <span className="font-bold text-[#3f0a0b]">{firstName}</span>
                 </span>
                 <button
                   onClick={exitGuest}
                   title="Salir del modo invitado"
-                  className="bg-indigo-500/50 hover:bg-indigo-500 px-2 py-1.5 rounded-lg transition-all"
+                  className="rounded-xl bg-[#f4ece1] px-2.5 py-2 text-[#6f1719] transition hover:bg-[#f7cdcd]"
                 >
                   <i className="fa-solid fa-right-from-bracket"></i>
                 </button>
@@ -121,17 +122,25 @@ export default function Header() {
           {currentView === 'store' && (
             <button
               onClick={() => setCartModalOpen(true)}
-              className="relative bg-indigo-500 hover:bg-indigo-400 text-white p-2.5 rounded-xl transition-all flex items-center justify-center"
+              aria-label={`Abrir carrito${cartCount > 0 ? `, ${cartCount} productos` : ''}`}
+              className="relative flex items-center justify-center gap-2 rounded-xl bg-[#9e2a2b] px-3 py-2.5 text-white shadow-sm transition hover:bg-[#871f21]"
             >
-              <i className="fa-solid fa-cart-shopping text-lg"></i>
+              <i className="fa-solid fa-bag-shopping text-base"></i>
+              <span className="hidden text-sm font-semibold sm:inline">Carrito</span>
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-amber-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold shadow">
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#edc978] px-1 text-xs font-bold text-[#3f0a0b] shadow">
                   {cartCount}
                 </span>
               )}
             </button>
           )}
         </div>
+
+        <nav aria-label="Navegación principal" className="col-span-2 flex items-center justify-between gap-1 rounded-2xl border border-[#f4ece1] bg-[#f4ece1]/80 p-1 lg:hidden">
+          <button onClick={() => switchView('store')} className={`${tabClass('store')} flex-1`}><i className="fa-solid fa-store" aria-hidden="true"></i><span>Tienda</span></button>
+          <button onClick={() => switchView('prints')} className={`${tabClass('prints')} flex-1`}><i className="fa-solid fa-print" aria-hidden="true"></i><span>Impresiones</span></button>
+          <button onClick={() => switchView('access')} className={`${tabClass('access')} flex-1`}><i className="fa-solid fa-user" aria-hidden="true"></i><span>Mi cuenta</span></button>
+        </nav>
       </div>
     </header>
   );

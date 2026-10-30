@@ -2,12 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-body { font-family: 'Inter', sans-serif; }
+html { scroll-behavior: smooth; }
+body {
+  min-width: 320px;
+  background-color: #fbf7f1;
+  color: #3f0a0b;
+  font-family: 'Inter', sans-serif;
+}
+
+.font-serif { font-family: 'Playfair Display', Georgia, serif; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+::-webkit-scrollbar-track { background: #f4ece1; }
+::-webkit-scrollbar-thumb { background: #c99b94; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #9e2a2b; }
 
 @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .animate-fade { animation: fade 0.5s ease; }
@@ -19,8 +32,8 @@ body { font-family: 'Inter', sans-serif; }
   place-items: center;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 42%, rgb(99 102 241 / 26%), transparent 34rem),
-    linear-gradient(145deg, #111238 0%, #312e81 54%, #4338ca 100%);
+    radial-gradient(ellipse at 50% 42%, rgb(237 201 120 / 20%), transparent 34rem),
+    linear-gradient(145deg, #3f0a0b 0%, #6f1719 54%, #9e2a2b 100%);
   color: #fff;
 }
 
@@ -84,7 +97,7 @@ body { font-family: 'Inter', sans-serif; }
   width: 0.4rem;
   height: 0.4rem;
   border-radius: 9999px;
-  background: #fbbf24;
+  background: #edc978;
   animation: splash-dot 1.1s ease-in-out infinite;
 }
 

@@ -4,7 +4,7 @@ import { supabase } from '../../lib/supabase';
 
 const ORDER_STATUS_COLOR = {
   PENDIENTE: 'bg-amber-100 text-amber-700',
-  LISTO: 'bg-indigo-100 text-indigo-700',
+  LISTO: 'bg-[#f7cdcd] text-[#6f1719]',
   ENTREGADO: 'bg-emerald-100 text-emerald-700',
   RECHAZADO: 'bg-rose-100 text-rose-700',
   CANCELADO: 'bg-slate-100 text-slate-600',
@@ -87,13 +87,13 @@ export default function CustomerDashboard() {
       </div>
 
       <div className="grid grid-cols-3 gap-3">
-        <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-4">
-          <p className="text-xs text-indigo-500 font-semibold uppercase">Pedidos</p>
-          <p className="text-2xl font-extrabold text-indigo-700">{myOrders.length}</p>
+        <div className="rounded-2xl border border-[#f7cdcd] bg-[#fdf3f3] p-4">
+          <p className="text-xs font-semibold uppercase text-[#9e2a2b]">Pedidos</p>
+          <p className="text-2xl font-extrabold text-[#6f1719]">{myOrders.length}</p>
         </div>
-        <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4">
-          <p className="text-xs text-blue-500 font-semibold uppercase">Impresiones</p>
-          <p className="text-2xl font-extrabold text-blue-700">{myPrints.length}</p>
+        <div className="rounded-2xl border border-[#e8dbca] bg-[#fbf7f1] p-4">
+          <p className="text-xs font-semibold uppercase text-[#9e2a2b]">Impresiones</p>
+          <p className="text-2xl font-extrabold text-[#6f1719]">{myPrints.length}</p>
         </div>
         <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-4">
           <p className="text-xs text-emerald-600 font-semibold uppercase">Total gastado</p>
@@ -102,10 +102,10 @@ export default function CustomerDashboard() {
       </div>
 
       <div className="flex rounded-2xl bg-slate-100 p-1 gap-1 text-sm">
-        <button onClick={() => setTab('pedidos')} className={tab === 'pedidos' ? 'flex-1 rounded-xl bg-white px-3 py-2 font-semibold text-indigo-700 shadow-sm' : 'flex-1 rounded-xl px-3 py-2 font-semibold text-slate-500'}>
+        <button onClick={() => setTab('pedidos')} className={tab === 'pedidos' ? 'flex-1 rounded-xl bg-white px-3 py-2 font-semibold text-[#9e2a2b] shadow-sm' : 'flex-1 rounded-xl px-3 py-2 font-semibold text-slate-500'}>
           <i className="fa-solid fa-bag-shopping mr-1.5"></i>Mis pedidos
         </button>
-        <button onClick={() => setTab('impresiones')} className={tab === 'impresiones' ? 'flex-1 rounded-xl bg-white px-3 py-2 font-semibold text-indigo-700 shadow-sm' : 'flex-1 rounded-xl px-3 py-2 font-semibold text-slate-500'}>
+        <button onClick={() => setTab('impresiones')} className={tab === 'impresiones' ? 'flex-1 rounded-xl bg-white px-3 py-2 font-semibold text-[#9e2a2b] shadow-sm' : 'flex-1 rounded-xl px-3 py-2 font-semibold text-slate-500'}>
           <i className="fa-solid fa-print mr-1.5"></i>Mis impresiones
         </button>
       </div>
@@ -125,7 +125,7 @@ export default function CustomerDashboard() {
               return (
                 <div key={o.id_pedido} className="border border-slate-200 rounded-2xl p-4 bg-white shadow-sm space-y-2 hover:shadow-md transition-shadow">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-indigo-600">Orden {o.numero_orden || `P-${String(o.id_pedido).padStart(4, '0')}`}</span>
+                    <span className="text-xs font-bold text-[#9e2a2b]">Orden {o.numero_orden || `P-${String(o.id_pedido).padStart(4, '0')}`}</span>
                     <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${statusBadge(o.estado)}`}>{o.estado}</span>
                   </div>
                   <div className="text-xs text-slate-500 flex items-center gap-2 flex-wrap">
@@ -138,7 +138,7 @@ export default function CustomerDashboard() {
                   {itemSummary && <p className="text-xs text-slate-600 truncate"><i className="fa-solid fa-box-open text-slate-400 mr-1"></i>{itemSummary}</p>}
                   <div className="flex items-center justify-between pt-1 border-t border-slate-100">
                     <span className="font-extrabold text-slate-800 text-base">C${parseFloat(o.total || 0).toFixed(2)}</span>
-                    <button onClick={() => viewOrderDetails(orderForDetail(o))} className="text-xs text-indigo-600 font-semibold hover:underline flex items-center gap-1">
+                    <button onClick={() => viewOrderDetails(orderForDetail(o))} className="flex items-center gap-1 text-xs font-semibold text-[#9e2a2b] hover:underline">
                       Ver detalle <i className="fa-solid fa-chevron-right text-[10px]"></i>
                     </button>
                   </div>
@@ -160,7 +160,7 @@ export default function CustomerDashboard() {
             myPrints.map((p) => (
               <div key={p.id_trabajo} className="border border-slate-200 rounded-2xl p-4 bg-white shadow-sm space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-indigo-600">Orden {p.numero_orden || `I-${String(p.id_trabajo).padStart(4, '0')}`}</span>
+                  <span className="text-xs font-bold text-[#9e2a2b]">Orden {p.numero_orden || `I-${String(p.id_trabajo).padStart(4, '0')}`}</span>
                   <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${statusBadge(p.estado)}`}>{p.estado}</span>
                 </div>
                 <p className="text-xs text-slate-600 truncate"><i className="fa-solid fa-file-lines mr-1 text-slate-400"></i>{p.archivo_nombre}</p>

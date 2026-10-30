@@ -24,44 +24,60 @@ export default function HeroSlider({ scrollToProducts }) {
   const prod = products.length > 0 ? products[index % products.length] : null;
 
   return (
-    <section className="w-full bg-gradient-to-br from-indigo-950 via-indigo-800 to-purple-900 text-white overflow-hidden shadow-2xl relative" style={{ minHeight: '340px' }}>
-      <div className="absolute inset-0 opacity-[0.06] bg-[radial-gradient(#e0e7ff_1px,transparent_1px)] [background-size:20px_20px]"></div>
+    <section aria-label="Presentación de la tienda" className="relative min-h-[380px] overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#9e2a2b] via-[#7d1d22] to-[#3f0a0b] text-[#fffdfa] shadow-xl">
+      <div className="absolute inset-0 opacity-[0.11] bg-[radial-gradient(#fffdfa_1px,transparent_1px)] [background-size:22px_22px]"></div>
+      <div className="absolute -right-20 -top-32 h-80 w-80 rounded-full border border-white/10"></div>
+      <div className="absolute -right-8 -top-20 h-56 w-56 rounded-full border border-white/10"></div>
 
-      <div className="relative max-w-7xl mx-auto px-6 py-10 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        <div className="space-y-4">
-          <span className="bg-indigo-500/30 text-indigo-200 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider border border-indigo-400/30">Vuelta a Clases 2026</span>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Todo lo que necesitas para aprender y crear</h2>
-          <p className="text-indigo-200 text-sm md:text-base">Encuentra los mejores libros, cuadernos, materiales y ahora envía tus documentos a imprimir directamente.</p>
+      <div className="relative grid grid-cols-1 items-center gap-8 px-6 py-8 sm:px-10 md:grid-cols-2 md:gap-10 md:px-12 md:py-12">
+        <div className="space-y-5">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-[#f4ece1]">
+            <i className="fa-solid fa-book-open text-[#edc978]"></i>
+            Librería · Papelería · Impresiones
+          </span>
+          <h2 className="max-w-xl font-serif text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">Un espacio para aprender, crear y descubrir</h2>
+          <p className="max-w-lg text-sm leading-relaxed text-[#f4ece1] sm:text-base">Encuentra libros, útiles y materiales para tus ideas. También puedes enviar tus documentos a imprimir y elegir dónde recogerlos.</p>
           <div className="pt-2 flex flex-wrap gap-3">
-            <button onClick={scrollToProducts} className="bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-6 py-3 rounded-xl shadow-lg transition-all flex items-center space-x-2">
+            <button onClick={scrollToProducts} className="flex items-center gap-2 rounded-xl bg-[#edc978] px-5 py-3 font-bold text-[#3f0a0b] shadow-lg transition hover:bg-[#f4d99b]">
               <span>Ver Catálogo</span>
               <i className="fa-solid fa-arrow-down"></i>
             </button>
-            <button onClick={() => switchView('prints')} className="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-xl backdrop-blur border border-white/20 transition-all flex items-center space-x-2">
+            <button onClick={() => switchView('prints')} className="flex items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-5 py-3 font-bold text-white backdrop-blur transition hover:bg-white/20">
               <i className="fa-solid fa-print"></i>
-              <span>Centro de Impresiones</span>
+              <span>Solicitar impresión</span>
             </button>
           </div>
         </div>
 
-        <div className="relative h-64 md:h-80 flex items-center justify-center bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm p-4 overflow-hidden">
-          <div className="w-full h-full relative flex items-center justify-center">
+        <div className="relative flex min-h-64 items-center justify-center overflow-hidden rounded-[1.75rem] border border-white/20 bg-[#fbf7f1] p-4 text-[#3f0a0b] shadow-lg sm:min-h-72">
+          <div className="relative flex h-full min-h-56 w-full items-center justify-center">
             {prod && (
-              <div key={prod.id} className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 w-full h-full px-4 animate-fade">
-                <div className="w-36 h-36 md:w-44 md:h-44 flex items-center justify-center drop-shadow-2xl">
+              <div key={prod.id} className="flex w-full animate-fade flex-col items-center justify-center gap-4 px-6 sm:flex-row sm:gap-6">
+                <div className="flex h-36 w-36 shrink-0 items-center justify-center rounded-2xl bg-white p-3 shadow-sm sm:h-44 sm:w-44">
                   <img src={prod.image} alt={prod.name} className="max-h-full max-w-full object-contain filter drop-shadow-[0_10px_8px_rgba(0,0,0,0.3)] transition-transform duration-500 hover:scale-110" onError={(e) => { e.target.src = 'https://placehold.co/300x300/png?text=Util'; }} />
                 </div>
-                <div className="text-center sm:text-left space-y-2">
-                  <span className="bg-amber-400 text-slate-900 font-bold text-xs px-2.5 py-1 rounded-full uppercase">{prod.category}</span>
-                  <h3 className="text-xl md:text-2xl font-bold text-white">{prod.name}</h3>
-                  <p className="text-indigo-200 text-xs md:text-sm line-clamp-2">{prod.desc}</p>
-                  <div className="text-lg font-extrabold text-amber-300">C${prod.price.toFixed(2)}</div>
+                <div className="space-y-2 text-center sm:text-left">
+                  <span className="inline-block rounded-full bg-[#f7cdcd] px-2.5 py-1 text-xs font-bold uppercase text-[#6f1719]">{prod.category}</span>
+                  <h3 className="line-clamp-2 font-serif text-xl font-bold sm:text-2xl">{prod.name}</h3>
+                  <p className="line-clamp-2 text-xs text-[#6f1719]/75 sm:text-sm">{prod.desc}</p>
+                  <div className="text-lg font-extrabold text-[#9e2a2b]">C${prod.price.toFixed(2)}</div>
                 </div>
               </div>
             )}
+            {!prod && (
+              <div className="flex max-w-xs flex-col items-center gap-3 text-center">
+                <img src="/brand-mark.svg" alt="" className="h-20 w-20" />
+                <h3 className="font-serif text-xl font-bold">Explora nuestro catálogo</h3>
+                <p className="text-sm text-[#6f1719]/75">Consulta las categorías y productos disponibles en la tienda.</p>
+              </div>
+            )}
           </div>
-          <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/60 text-white w-9 h-9 rounded-full flex items-center justify-center backdrop-blur transition-all"><i className="fa-solid fa-chevron-left"></i></button>
-          <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/60 text-white w-9 h-9 rounded-full flex items-center justify-center backdrop-blur transition-all"><i className="fa-solid fa-chevron-right"></i></button>
+          {products.length > 1 && (
+            <>
+              <button onClick={prev} aria-label="Producto anterior" className="absolute left-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-[#6f1719] text-white shadow transition hover:bg-[#3f0a0b]"><i className="fa-solid fa-chevron-left"></i></button>
+              <button onClick={next} aria-label="Siguiente producto" className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-[#6f1719] text-white shadow transition hover:bg-[#3f0a0b]"><i className="fa-solid fa-chevron-right"></i></button>
+            </>
+          )}
         </div>
       </div>
     </section>
