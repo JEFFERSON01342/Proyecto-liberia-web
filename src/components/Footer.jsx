@@ -12,7 +12,7 @@ export default function Footer() {
           <div className="space-y-3">
             <div className="flex items-center space-x-3">
               <div className="bg-white rounded-xl shadow flex items-center justify-center w-10 h-10 overflow-hidden">
-                <img src="img/logo.png" alt="Logotipo de Librería Lisjuashde" className="w-full h-full object-contain p-1" />
+                <img src="/brand-mark.svg" alt="Logotipo de Librería Lisjuashde" className="w-full h-full object-contain p-1" />
               </div>
               <div>
                 <h3 className="font-bold text-white text-lg leading-tight">Librería Lisjuashde</h3>

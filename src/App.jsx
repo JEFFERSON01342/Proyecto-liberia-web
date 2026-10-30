@@ -16,10 +16,18 @@ export default function App() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="text-center space-y-3">
-          <i className="fa-solid fa-spinner fa-spin text-4xl text-indigo-600"></i>
-          <p className="text-sm text-slate-500 font-medium">Cargando Librería Lisjuashde...</p>
+      <div className="store-splash" role="status" aria-live="polite">
+        <div className="store-splash__content">
+          <div className="store-splash__mark">
+            <img src="/brand-mark.svg" alt="" width="96" height="96" />
+          </div>
+          <h1 className="store-splash__title">Librería Lisjuashde</h1>
+          <p className="store-splash__message">Preparando tu tienda</p>
+          <div className="store-splash__dots" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
         </div>
       </div>
     );

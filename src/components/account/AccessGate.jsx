@@ -55,7 +55,7 @@ export default function AccessGate() {
         <div className="absolute inset-0 opacity-[0.07] bg-[radial-gradient(#e0e7ff_1px,transparent_1px)] [background-size:22px_22px]"></div>
         <div className="relative flex items-center gap-3">
           <div className="bg-white rounded-2xl shadow-lg flex items-center justify-center w-14 h-14 overflow-hidden">
-            <img src="img/logo.png" alt="Librería Lisjuashde" className="w-full h-full object-contain p-1.5" onError={(e) => { e.target.style.display = 'none'; }} />
+            <img src="/brand-mark.svg" alt="Librería Lisjuashde" className="w-full h-full object-contain p-1.5" onError={(e) => { e.target.style.display = 'none'; }} />
           </div>
           <div>
             <h1 className="font-extrabold text-2xl leading-tight">Librería Lisjuashde</h1>
@@ -82,7 +82,7 @@ export default function AccessGate() {
           {/* Mobile brand */}
           <div className="lg:hidden flex items-center gap-3 mb-8">
             <div className="bg-indigo-600 rounded-xl shadow flex items-center justify-center w-11 h-11 overflow-hidden">
-              <img src="img/logo.png" alt="Librería Lisjuashde" className="w-full h-full object-contain p-1" onError={(e) => { e.target.style.display = 'none'; }} />
+              <img src="/brand-mark.svg" alt="Librería Lisjuashde" className="w-full h-full object-contain p-1" onError={(e) => { e.target.style.display = 'none'; }} />
             </div>
             <div>
               <h1 className="font-extrabold text-lg leading-tight text-slate-900">Librería Lisjuashde</h1>
